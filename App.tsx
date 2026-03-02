@@ -166,12 +166,12 @@ const App: React.FC = () => {
           </div>
 
           {/* Hero Image */}
-          <div className="absolute bottom-0 right-0 md:relative md:bottom-auto md:right-auto h-[60vh] md:h-[70vh] w-full md:w-full flex justify-center md:justify-end items-end pointer-events-none order-1 md:order-2 z-0 md:z-auto">
+          <div className="hidden md:flex relative h-[70vh] w-full justify-end items-end pointer-events-none order-2">
              <img 
                src="https://placehold.co/600x900/1e293b/38bdf8?text=Jack+Tabery+Portrait" 
                alt="Jack Tabery"
                loading="eager"
-               className="h-full w-auto md:w-full object-contain md:object-cover object-bottom opacity-100 drop-shadow-2xl"
+               className="h-full w-full object-cover object-bottom opacity-100 drop-shadow-2xl"
                style={{ 
                  maskImage: 'linear-gradient(to top, black 80%, transparent 100%)',
                  WebkitMaskImage: 'linear-gradient(to top, black 80%, transparent 100%)'
