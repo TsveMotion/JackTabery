@@ -48,12 +48,12 @@ const App: React.FC = () => {
   };
 
   const instagramImages = [
-    "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1599474924187-334a4ae513df?q=80&w=400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1516515510860-327c5417978d?q=80&w=400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1532906619279-a78260408916?q=80&w=400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1503376763036-066120622c74?q=80&w=400&auto=format&fit=crop"
+    "/IMG_6625.JPG",
+    "/IMG_7008.JPG",
+    "/IMG_7020.JPG",
+    "/IMG_5501.JPG",
+    "/IMG_6990.JPG",
+    "/IMG_6981.JPG"
   ];
 
   const getAchievementIcon = (id: string) => {
@@ -133,7 +133,7 @@ const App: React.FC = () => {
         {/* Background Image Placeholder */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40" 
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2574&auto=format&fit=crop)' }} 
+          style={{ backgroundImage: 'url(/IMG_9051.JPG)' }} 
         />
         
         {/* Gradient Overlay */}
@@ -156,11 +156,11 @@ const App: React.FC = () => {
             </h1>
             
             <a 
-              href="#contact" 
-              onClick={(e) => handleNavClick(e, '#contact')}
+              href="#calendar" 
+              onClick={(e) => handleNavClick(e, '#calendar')}
               className="inline-flex items-center mt-10 px-8 py-4 bg-brand-accent text-brand-navy font-bold uppercase tracking-wider hover:bg-white hover:text-brand-accent transition-colors rounded-sm"
             >
-              Partner With Jack
+              View 2026 Calendar
               <ArrowRight className="ml-2 w-5 h-5" />
             </a>
           </div>
@@ -168,7 +168,7 @@ const App: React.FC = () => {
           {/* Hero Image */}
           <div className="hidden md:flex relative h-[70vh] w-full justify-end items-end pointer-events-none order-2">
              <img 
-               src="https://placehold.co/600x900/1e293b/38bdf8?text=Jack+Tabery+Portrait" 
+               src="/IMG_7563.JPG" 
                alt="Jack Tabery"
                loading="eager"
                className="h-full w-full object-cover object-bottom opacity-100 drop-shadow-2xl"
@@ -204,7 +204,6 @@ const App: React.FC = () => {
               </p>
               <p>
                 From rental karting to competitive circuit racing, his journey is built on discipline and measurable improvement.
-                Unlike many, Jack approaches racing not just as a sport, but as a precise science of data, fitness, and mental fortitude.
               </p>
               <p className="font-bold text-white border-l-4 border-brand-accent pl-4">
                 As Jack turned 16 in 2024, he found a sudden interest in motorsports, where he decided to join his family’s team in the French FunCup Championship. Since then, Jack has been determined to continue his racing journey, embracing every challenge that comes with competitive racing. From adapting to the intensity of wheel-to-wheel battles to building consistency under pressure, he has shown steady growth on track. With strong ambition driving him forward, he continues to push his limits and gain valuable experience with every race weekend.
@@ -212,7 +211,7 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8">
               <img 
-                src="https://placehold.co/800x600/1e293b/38bdf8?text=Jack+On+Track" 
+                src="/IMG_7557.JPG" 
                 alt="Jack racing on track" 
                 loading="lazy"
                 className="w-full h-64 object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-500 border border-white/10"
@@ -241,13 +240,12 @@ const App: React.FC = () => {
         </div>
       </Section>
 
-      {/* --- JOURNEY SECTION --- */}
-      <Section id="journey" className="bg-brand-navy" dark>
+      {/* --- JOURNEY SECTION (COMMENTED OUT - KEEP FOR LATER) --- */}
+      {/* <Section id="journey" className="bg-brand-navy" dark>
         <div className="relative grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          {/* Image Side */}
           <div className="relative">
             <img 
-              src="https://placehold.co/600x800/1e293b/38bdf8?text=Karting+Days" 
+              src="/IMG_7569.JPG" 
               alt="Karting days" 
               loading="lazy"
               className="w-full aspect-[4/5] object-cover opacity-60 rounded-lg"
@@ -260,7 +258,6 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* Content Side */}
           <div className="space-y-12">
             <div>
               <span className="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2 block">The Beginning</span>
@@ -289,7 +286,7 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-      </Section>
+      </Section> */}
 
       {/* --- ACCOMPLISHMENTS --- */}
       <Section className="bg-white relative overflow-hidden py-20">
@@ -325,23 +322,23 @@ const App: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-white/10 pb-6">
           <Heading level={2} className="text-4xl md:text-5xl" accentWord="Schedule">2026 Race Schedule</Heading>
           <span className="hidden md:inline-block font-bold text-brand-muted uppercase tracking-widest mt-4 md:mt-0 text-right">
-            Ligier European Championship<br/>& French FunCup
+            Ligier European Series<br/>& French FunCup
           </span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
           {SCHEDULE_DATA.map((race) => (
             <div key={race.id} className="group flex items-center bg-brand-surface border border-white/5 p-4 hover:border-brand-accent transition-colors rounded-lg">
-              <div className="bg-brand-navy text-white p-4 w-24 h-24 flex flex-col justify-center items-center text-center mr-6 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-sm shrink-0">
-                <span className="font-heading font-black italic text-2xl leading-none">{race.dateRange}</span>
-                <span className="text-xs font-bold uppercase tracking-wider mt-1">{race.month}</span>
+              <div className="bg-brand-navy text-white p-5 w-32 h-32 flex flex-col justify-center items-center text-center mr-6 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-sm shrink-0 border-2 border-white/10">
+                <span className="font-heading font-black italic text-3xl leading-none">{race.dateRange}</span>
+                <span className="text-sm font-bold uppercase tracking-wider mt-2">{race.month}</span>
               </div>
-              <div className="flex-grow">
-                <div className="flex justify-between items-start">
+              <div className="flex-grow min-w-0">
+                <div className="flex justify-between items-start gap-2">
                   <span className="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
-                  <span className="text-2xl" role="img" aria-label="flag">{race.flag}</span>
+                  <span className="text-2xl shrink-0" role="img" aria-label="flag">{race.flag}</span>
                 </div>
-                <h4 className="font-heading font-bold italic text-xl md:text-2xl uppercase text-white">{race.circuit}</h4>
+                <h4 className="font-heading font-bold italic text-xl md:text-2xl uppercase text-white break-words">{race.circuit}</h4>
               </div>
             </div>
           ))}
@@ -511,6 +508,42 @@ const App: React.FC = () => {
         </div>
       </Section>
 
+      {/* --- PARTNERS --- */}
+      <div id="partners" className="bg-white py-24">
+        <div className="max-w-[1400px] mx-auto px-6">
+            <div className="text-center mb-16">
+            <h2 className="font-heading font-black italic text-4xl md:text-6xl text-brand-navy uppercase tracking-tighter">
+                Partners
+            </h2>
+            </div>
+
+            {/* Large Partner Logos Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">
+            {PARTNERS.map((partner) => (
+                <a 
+                    key={partner.id} 
+                    href={partner.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white border-2 border-brand-navy/10 rounded-xl p-8 md:p-12 flex items-center justify-center hover:border-brand-accent hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
+                >
+                <img src={partner.logoUrl} alt={partner.name} className="max-h-24 md:max-h-32 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all" />
+                </a>
+            ))}
+            </div>
+
+            <div className="text-center mt-16">
+            <a 
+                href="#contact" 
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="inline-block border-b-2 border-brand-navy text-brand-navy font-bold uppercase hover:text-brand-accent hover:border-brand-accent transition-colors tracking-widest text-sm"
+            >
+                Become a Partner
+            </a>
+            </div>
+        </div>
+      </div>
+
       {/* --- INSTAGRAM --- */}
       <div className="py-12 bg-brand-navy border-t border-white/10">
         <div className="max-w-[1180px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center mb-8">
@@ -542,42 +575,6 @@ const App: React.FC = () => {
                     </div>
                 </div>
             ))}
-        </div>
-      </div>
-
-      {/* --- PARTNERS --- */}
-      <div id="partners" className="bg-white py-20">
-        <div className="max-w-[1180px] mx-auto px-6">
-            <div className="text-center mb-12">
-            <h2 className="font-heading font-black italic text-4xl md:text-5xl text-brand-navy uppercase tracking-tighter">
-                Partners
-            </h2>
-            </div>
-
-            {/* Responsive Grid for Logos */}
-            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
-            {PARTNERS.map((partner) => (
-                <a 
-                    key={partner.id} 
-                    href={partner.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-[180px] h-[80px] flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 hover:scale-105"
-                >
-                <img src={partner.logoUrl} alt={partner.name} className="max-h-full max-w-full object-contain" />
-                </a>
-            ))}
-            </div>
-
-            <div className="text-center mt-16">
-            <a 
-                href="#contact" 
-                onClick={(e) => handleNavClick(e, '#contact')}
-                className="inline-block border-b-2 border-brand-navy text-brand-navy font-bold uppercase hover:text-brand-accent hover:border-brand-accent transition-colors tracking-widest text-sm"
-            >
-                Become a Partner
-            </a>
-            </div>
         </div>
       </div>
 

@@ -16,7 +16,7 @@ export const SCHEDULE_DATA: ScheduleItem[] = [
   { id: '4', dateRange: '22-24', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'MAGNY-COURS', flag: '🇫🇷' },
   { id: '5', dateRange: '30-31', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'CHARADE', flag: '🇫🇷' },
   { id: '6', dateRange: '07', month: 'JUN', series: 'LIGIER EURO', circuit: 'LE MANS 24H', flag: '🇫🇷' },
-  { id: '7', dateRange: '02-05', month: 'JUL', series: 'FRENCH FUNCUP', circuit: 'SPA 25H', flag: '🇧🇪' },
+  { id: '7', dateRange: '02-05', month: 'JUL', series: 'FRENCH FUNCUP', circuit: 'SPA-FRANCORCHAMPS 25H', flag: '🇧🇪' },
   { id: '8', dateRange: '21-23', month: 'AUG', series: 'LIGIER EURO', circuit: 'SPA-FRANCORCHAMPS', flag: '🇧🇪' },
   { id: '9', dateRange: '04-06', month: 'SEP', series: 'FRENCH FUNCUP', circuit: 'LE CASTELLET', flag: '🇫🇷' },
   { id: '10', dateRange: '11-12', month: 'SEP', series: 'LIGIER EURO', circuit: 'SILVERSTONE', flag: '🇬🇧' },
@@ -29,25 +29,24 @@ export const ACCOMPLISHMENTS: Accomplishment[] = [
   { id: '1', place: '1st Overall', title: 'Zolder Promotion Night', subtitle: '2024', emoji: '🏆' },
   { id: '2', place: '1x Rookie Win', title: 'European FunCup', subtitle: '2025', emoji: '🥇' },
   { id: '3', place: '1x Rookie Podium', title: 'European FunCup', subtitle: '2025', emoji: '🥈' },
-  { id: '4', place: '2x Podium in Class', title: 'European FunCup', subtitle: '2025', emoji: '🏎️' },
+  { id: '4', place: '4x Podium in Class', title: 'European FunCup', subtitle: '2025', emoji: '🏎️' },
   { id: '5', place: 'Vice-Champions', title: 'European FunCup', subtitle: '2025', emoji: '🥈' },
-  { id: '6', place: '1x Podium', title: 'Ligier JS Cup France', subtitle: '2025', emoji: '🥉' },
 ];
 
 export const PARTNERS: Partner[] = [
-  { id: '1', name: 'Alpha Performance', logoUrl: 'https://placehold.co/400x150/1e293b/38bdf8?text=ALPHA', url: '#' },
-  { id: '2', name: 'TechStream', logoUrl: 'https://placehold.co/400x150/1e293b/38bdf8?text=TECHSTREAM', url: '#' },
-  { id: '3', name: 'Velocity Gear', logoUrl: 'https://placehold.co/400x150/1e293b/38bdf8?text=VELOCITY', url: '#' },
-  { id: '4', name: 'Apex Simulators', logoUrl: 'https://placehold.co/400x150/1e293b/38bdf8?text=APEX', url: '#' },
+  { id: '1', name: 'Dedicated', logoUrl: '/partners/dedicated.png', url: 'https://dedicated.lu/' },
+  { id: '2', name: 'The Little Bakeshop', logoUrl: '/partners/BakeShop.png', url: 'https://www.thelittlebakeshop.me/' },
+  { id: '3', name: 'W Legal', logoUrl: '/partners/wlegal.png', url: '#' },
+  { id: '4', name: 'WACC', logoUrl: '/partners/wacc2.png', url: 'https://www.wacc.lu/' },
 ];
 
 export const GALLERY_IMAGES: GalleryItem[] = [
-  { id: '1', src: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=800&auto=format&fit=crop', alt: 'Formula Car', category: 'Race' },
-  { id: '2', src: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?q=80&w=800&auto=format&fit=crop', alt: 'Track Action', category: 'Race' },
-  { id: '3', src: 'https://images.unsplash.com/photo-1599474924187-334a4ae513df?q=80&w=800&auto=format&fit=crop', alt: 'Helmet Detail', category: 'Gear' },
-  { id: '4', src: 'https://images.unsplash.com/photo-1516515510860-327c5417978d?q=80&w=800&auto=format&fit=crop', alt: 'Cockpit Prep', category: 'Behind the Scenes' },
-  { id: '5', src: 'https://images.unsplash.com/photo-1625026937107-13318995a940?q=80&w=800&auto=format&fit=crop', alt: 'Blue Racing Car', category: 'Race' },
-  { id: '6', src: 'https://images.unsplash.com/photo-1503376763036-066120622c74?q=80&w=800&auto=format&fit=crop', alt: 'Speed Blur', category: 'Race' },
+  { id: '1', src: '/IMG_6625.JPG', alt: 'Formula Car', category: 'Race' },
+  { id: '2', src: '/IMG_7020.JPG', alt: 'Track Action', category: 'Race' },
+  { id: '3', src: '/IMG_7008.JPG', alt: 'Helmet Detail', category: 'Gear' },
+  { id: '4', src: '/IMG_5501.JPG', alt: 'Cockpit Prep', category: 'Behind the Scenes' },
+  { id: '5', src: '/IMG_6990.JPG', alt: 'Blue Racing Car', category: 'Race' },
+  { id: '6', src: '/IMG_6981.JPG', alt: 'Speed Blur', category: 'Race' },
 ];
 
 export const ARCHIVE_DATA: ArchiveSeason[] = [
