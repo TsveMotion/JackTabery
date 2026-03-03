@@ -1,4 +1,5 @@
 import { ScheduleItem, Partner, GalleryItem, Accomplishment, NavItem, ArchiveSeason } from './types';
+import { getImageUrl } from './config';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "About Jack", anchor: "#about" },
@@ -41,12 +42,12 @@ export const PARTNERS: Partner[] = [
 ];
 
 export const GALLERY_IMAGES: GalleryItem[] = [
-  { id: '1', src: '/IMG_6625.JPG', alt: 'Formula Car', category: 'Race' },
-  { id: '2', src: '/IMG_7020.JPG', alt: 'Track Action', category: 'Race' },
-  { id: '3', src: '/IMG_7008.JPG', alt: 'Helmet Detail', category: 'Gear' },
-  { id: '4', src: '/IMG_5501.JPG', alt: 'Cockpit Prep', category: 'Behind the Scenes' },
-  { id: '5', src: '/IMG_6990.JPG', alt: 'Blue Racing Car', category: 'Race' },
-  { id: '6', src: '/IMG_6981.JPG', alt: 'Speed Blur', category: 'Race' },
+  { id: '1', src: getImageUrl('IMG_6625.jpg'), alt: 'Formula Car', category: 'Race' },
+  { id: '2', src: getImageUrl('Chester-79.jpg'), alt: 'Track Action', category: 'Race' },
+  { id: '3', src: getImageUrl('IMG_7553.jpg'), alt: 'Helmet Detail', category: 'Gear' },
+  { id: '4', src: getImageUrl('IMG_1904.jpg'), alt: 'Cockpit Prep', category: 'Behind the Scenes' },
+  { id: '5', src: getImageUrl('IMG_7574.jpg'), alt: 'Blue Racing Car', category: 'Race' },
+  { id: '6', src: getImageUrl('DO01000115.jpg'), alt: 'Speed Blur', category: 'Race' },
 ];
 
 export const ARCHIVE_DATA: ArchiveSeason[] = [

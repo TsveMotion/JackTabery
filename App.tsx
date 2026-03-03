@@ -4,6 +4,7 @@ import { Section } from './components/Section';
 import { Heading } from './components/Heading';
 import { LaurelIcon } from './components/LaurelIcon';
 import { NAV_ITEMS, SCHEDULE_DATA, PARTNERS, GALLERY_IMAGES, ACCOMPLISHMENTS, SOCIAL_LINKS, ARCHIVE_DATA } from './constants';
+import { getImageUrl } from './config';
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -48,12 +49,12 @@ const App: React.FC = () => {
   };
 
   const instagramImages = [
-    "/IMG_6625.JPG",
-    "/IMG_7008.JPG",
-    "/IMG_7020.JPG",
-    "/IMG_5501.JPG",
-    "/IMG_6990.JPG",
-    "/IMG_6981.JPG"
+    getImageUrl('IMG_6625.jpg'),
+    getImageUrl('IMG_7553.jpg'),
+    getImageUrl('Chester-79.jpg'),
+    getImageUrl('IMG_1904.jpg'),
+    getImageUrl('IMG_7574.jpg'),
+    getImageUrl('DO01000115.jpg')
   ];
 
   const getAchievementIcon = (id: string) => {
@@ -133,7 +134,7 @@ const App: React.FC = () => {
         {/* Background Image Placeholder */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40" 
-          style={{ backgroundImage: 'url(/IMG_9051.JPG)' }} 
+          style={{ backgroundImage: `url(${getImageUrl('C6C2E732-0994-4CD1-9577-86ABB4E2C1AE.jpg')})` }} 
         />
         
         {/* Gradient Overlay */}
@@ -168,7 +169,7 @@ const App: React.FC = () => {
           {/* Hero Image */}
           <div className="hidden md:flex relative h-[70vh] w-full justify-end items-end pointer-events-none order-2">
              <img 
-               src="/IMG_7563.JPG" 
+               src={getImageUrl('IMG_7563.jpg')} 
                alt="Jack Tabery"
                loading="eager"
                className="h-full w-full object-cover object-bottom opacity-100 drop-shadow-2xl"
@@ -196,7 +197,7 @@ const App: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Copy Block */}
           <div className="md:col-span-7">
-            <Heading level={2} className="text-4xl md:text-5xl mb-8" accentWord="Jack">About Jack</Heading>
+            <Heading level={2} className="text-4xl md:text-5xl" accentWord="Jack">About Jack</Heading>
             <div className="space-y-6 text-brand-muted text-lg leading-relaxed">
               <p>
                 Jack Tabery is a dedicated racing driver focused on performance, consistency, and progression. 
@@ -211,7 +212,7 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8">
               <img 
-                src="/IMG_7557.JPG" 
+                src={getImageUrl('IMG_7553.jpg')} 
                 alt="Jack racing on track" 
                 loading="lazy"
                 className="w-full h-64 object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-500 border border-white/10"
