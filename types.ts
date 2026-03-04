@@ -26,7 +26,6 @@ export interface Accomplishment {
   place: string;
   title: string;
   subtitle: string;
-  emoji: string;
 }
 
 export interface NavItem {

@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   // Form State
   const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -22,6 +23,31 @@ const App: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Auto-scroll carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 5) % GALLERY_IMAGES.length);
+    }, 4000); // Change slide every 4 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 5) % GALLERY_IMAGES.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 5 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  };
+
+  const getVisibleImages = () => {
+    const images = [];
+    for (let i = 0; i < 5; i++) {
+      const index = (currentSlide + i) % GALLERY_IMAGES.length;
+      images.push(GALLERY_IMAGES[index]);
+    }
+    return images;
+  };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, anchor: string) => {
     e.preventDefault();
@@ -49,25 +75,27 @@ const App: React.FC = () => {
   };
 
   const instagramImages = [
-    getImageUrl('IMG_6625.jpg'),
-    getImageUrl('IMG_7553.jpg'),
-    getImageUrl('Chester-79.jpg'),
-    getImageUrl('IMG_1904.jpg'),
-    getImageUrl('IMG_7574.jpg'),
-    getImageUrl('DO01000115.jpg')
+    '/IMG_6625.JPG',
+    '/IMG_7553.JPG',
+    '/Chester-79.jpg',
+    '/IMG_1904.JPG',
+    '/IMG_7574.JPG',
+    '/DO01000115.JPG'
   ];
+
+  // Preload first 5 carousel images for instant display
+  useEffect(() => {
+    const preloadImages = GALLERY_IMAGES.slice(0, 5);
+    preloadImages.forEach((img) => {
+      const image = new Image();
+      image.src = img.src;
+    });
+  }, []);
 
   const getAchievementIcon = (id: string) => {
     const iconClass = "w-16 h-16 md:w-20 md:h-20 text-brand-navy mb-4";
-    switch (id) {
-      case '1': return <Trophy className={iconClass} strokeWidth={1.5} />;
-      case '2': return <Star className={iconClass} strokeWidth={1.5} />;
-      case '3': return <Award className={iconClass} strokeWidth={1.5} />;
-      case '4': return <Flag className={iconClass} strokeWidth={1.5} />;
-      case '5': return <Trophy className={iconClass} strokeWidth={1.5} />;
-      case '6': return <Flag className={iconClass} strokeWidth={1.5} />;
-      default: return <Trophy className={iconClass} strokeWidth={1.5} />;
-    }
+    // All icons are Trophy for consistent praise-type appearance
+    return <Trophy className={iconClass} strokeWidth={1.5} />;
   };
 
   return (
@@ -134,7 +162,7 @@ const App: React.FC = () => {
         {/* Background Image Placeholder */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-40" 
-          style={{ backgroundImage: `url(${getImageUrl('C6C2E732-0994-4CD1-9577-86ABB4E2C1AE.jpg')})` }} 
+          style={{ backgroundImage: `url(/C6C2E732-0994-4CD1-9577-86ABB4E2C1AE.jpeg)` }} 
         />
         
         {/* Gradient Overlay */}
@@ -157,39 +185,25 @@ const App: React.FC = () => {
             </h1>
             
             <a 
-              href="#calendar" 
-              onClick={(e) => handleNavClick(e, '#calendar')}
+              href="#about" 
+              onClick={(e) => handleNavClick(e, '#about')}
               className="inline-flex items-center mt-10 px-8 py-4 bg-brand-accent text-brand-navy font-bold uppercase tracking-wider hover:bg-white hover:text-brand-accent transition-colors rounded-sm"
             >
-              View 2026 Calendar
+              Learn More About Jack
               <ArrowRight className="ml-2 w-5 h-5" />
             </a>
           </div>
 
-          {/* Hero Image */}
-          <div className="hidden md:flex relative h-[70vh] w-full justify-end items-end pointer-events-none order-2">
-             <img 
-               src={getImageUrl('IMG_7563.jpg')} 
-               alt="Jack Tabery"
-               loading="eager"
-               className="h-full w-full object-cover object-bottom opacity-100 drop-shadow-2xl"
-               style={{ 
-                 maskImage: 'linear-gradient(to top, black 80%, transparent 100%)',
-                 WebkitMaskImage: 'linear-gradient(to top, black 80%, transparent 100%)'
-               }}
-             />
-          </div>
+          {/* Scroll Indicator */}
+          <a 
+            href="#about" 
+            onClick={(e) => handleNavClick(e, '#about')}
+            className="absolute bottom-10 right-6 md:right-12 flex flex-col items-center space-y-2 animate-bounce cursor-pointer z-20 group"
+          >
+              <span className="text-[10px] text-white uppercase tracking-[0.2em] [writing-mode:vertical-rl] group-hover:text-brand-accent transition-colors">Scroll</span>
+              <div className="w-[1px] h-12 bg-white/30 group-hover:bg-brand-accent transition-colors"></div>
+          </a>
         </div>
-        
-        {/* Scroll Indicator */}
-        <a 
-          href="#about" 
-          onClick={(e) => handleNavClick(e, '#about')}
-          className="absolute bottom-10 right-6 md:right-12 flex flex-col items-center space-y-2 animate-bounce cursor-pointer z-20 group"
-        >
-            <span className="text-[10px] text-white uppercase tracking-[0.2em] [writing-mode:vertical-rl] group-hover:text-brand-accent transition-colors">Scroll</span>
-            <div className="w-[1px] h-12 bg-white/30 group-hover:bg-brand-accent transition-colors"></div>
-        </a>
       </div>
 
       {/* --- ABOUT SECTION --- */}
@@ -197,7 +211,7 @@ const App: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Copy Block */}
           <div className="md:col-span-7">
-            <Heading level={2} className="text-4xl md:text-5xl" accentWord="Jack">About Jack</Heading>
+            <Heading level={2} className="text-4xl md:text-5xl mb-12" accentWord="Jack">About Jack</Heading>
             <div className="space-y-6 text-brand-muted text-lg leading-relaxed">
               <p>
                 Jack Tabery is a dedicated racing driver focused on performance, consistency, and progression. 
@@ -212,11 +226,19 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8">
               <img 
-                src={getImageUrl('IMG_7553.jpg')} 
+                src="/IMG_6625.JPG" 
                 alt="Jack racing on track" 
                 loading="lazy"
-                className="w-full h-64 object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-500 border border-white/10"
+                className="w-full h-64 object-cover rounded-lg transition-all duration-500 border border-white/10"
               />
+              <a 
+                href="#contact" 
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="inline-flex items-center mt-6 px-8 py-4 bg-brand-accent text-brand-navy font-bold uppercase tracking-wider hover:bg-white hover:text-brand-accent transition-colors rounded-sm"
+              >
+                Get In Touch
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </a>
             </div>
           </div>
 
@@ -226,7 +248,7 @@ const App: React.FC = () => {
             <ul className="space-y-6">
               {[
                 { label: "Date of Birth", value: "August 21, 2007" },
-                { label: "Nationality", value: "Belgian 🇧🇪" },
+                { label: "Nationality", value: "Belgian" },
                 { label: "Height", value: "186 cm" },
                 { label: "Interests", value: "Motorsports, Tennis, Skiing" },
                 { label: "Current Series", value: <div className="text-right">Ligier European Series<br/>French FunCup</div> },
@@ -293,7 +315,7 @@ const App: React.FC = () => {
       <Section className="bg-white relative overflow-hidden py-20">
         <div className="max-w-[1180px] mx-auto px-6">
           <div className="text-center mb-16">
-            <Heading level={2} className="text-4xl md:text-5xl" accentWord="Highlights" dark>Career Highlights</Heading>
+            <Heading level={2} className="text-4xl md:text-5xl" accentWord="Accomplishments" dark>Career Accomplishments</Heading>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -329,10 +351,10 @@ const App: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
           {SCHEDULE_DATA.map((race) => (
-            <div key={race.id} className="group flex items-center bg-brand-surface border border-white/5 p-4 hover:border-brand-accent transition-colors rounded-lg">
-              <div className="bg-brand-navy text-white p-5 w-32 h-32 flex flex-col justify-center items-center text-center mr-6 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-sm shrink-0 border-2 border-white/10">
-                <span className="font-heading font-black italic text-3xl leading-none">{race.dateRange}</span>
-                <span className="text-sm font-bold uppercase tracking-wider mt-2">{race.month}</span>
+            <div key={race.id} className="group flex items-center bg-brand-surface border border-white/5 p-6 hover:border-brand-accent transition-colors rounded-lg">
+              <div className="bg-brand-navy text-white p-6 w-44 h-44 flex flex-col justify-center items-center text-center mr-8 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-sm shrink-0 border-4 border-white/20">
+                <span className="font-heading font-black italic text-5xl leading-none">{race.dateRange}</span>
+                <span className="text-lg font-bold uppercase tracking-wider mt-3">{race.month}</span>
               </div>
               <div className="flex-grow min-w-0">
                 <div className="flex justify-between items-start gap-2">
@@ -357,10 +379,10 @@ const App: React.FC = () => {
           <table className="w-full min-w-[600px] border-collapse text-left">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="py-4 px-6 text-sm font-bold text-brand-muted uppercase tracking-wider">Year</th>
-                <th className="py-4 px-6 text-sm font-bold text-brand-muted uppercase tracking-wider">Series</th>
-                <th className="py-4 px-6 text-sm font-bold text-brand-muted uppercase tracking-wider">Team</th>
-                <th className="py-4 px-6 text-sm font-bold text-brand-muted uppercase tracking-wider text-right">Highlights</th>
+                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Year</th>
+                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Series</th>
+                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Team</th>
+                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider text-right">Highlights</th>
               </tr>
             </thead>
             <tbody>
@@ -388,24 +410,62 @@ const App: React.FC = () => {
            </span>
         </div>
 
-        <div className="relative py-24">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {GALLERY_IMAGES.map((img) => (
-                    <div 
-                      key={img.id} 
-                      className="group relative aspect-[4/3] overflow-hidden cursor-pointer bg-brand-surface rounded-lg border border-white/5"
-                      onClick={() => setLightboxImage(img.src)}
-                    >
-                        <img 
-                            src={img.src} 
-                            alt={img.alt} 
-                            loading="lazy"
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                        />
-                        <div className="absolute inset-0 bg-brand-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="border border-white text-white px-4 py-2 uppercase font-bold text-xs tracking-widest hover:bg-white hover:text-brand-navy transition-colors">View</span>
-                        </div>
+        <div className="relative py-24 max-w-[1600px] mx-auto px-6">
+            {/* Carousel with Navigation */}
+            <div className="relative">
+                {/* Left Arrow */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent hover:bg-white text-brand-navy p-4 rounded-full shadow-lg transition-all hover:scale-110"
+                  aria-label="Previous"
+                >
+                  <ArrowRight className="w-6 h-6 rotate-180" />
+                </button>
+
+                {/* Images Container */}
+                <div className="overflow-hidden">
+                    <div className="flex gap-4 transition-transform duration-500 ease-in-out">
+                        {getVisibleImages().map((img, idx) => (
+                            <div 
+                              key={`${img.id}-${idx}`}
+                              className="group relative w-[calc(20%-12.8px)] flex-shrink-0 aspect-video overflow-hidden cursor-pointer bg-brand-surface rounded-lg border border-white/5"
+                              onClick={() => setLightboxImage(img.src)}
+                            >
+                                <img 
+                                    src={img.src} 
+                                    alt={img.alt} 
+                                    loading="lazy"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-brand-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <span className="border border-white text-white px-4 py-2 uppercase font-bold text-xs tracking-widest hover:bg-white hover:text-brand-navy transition-colors">View</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                </div>
+
+                {/* Right Arrow */}
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent hover:bg-white text-brand-navy p-4 rounded-full shadow-lg transition-all hover:scale-110"
+                  aria-label="Next"
+                >
+                  <ArrowRight className="w-6 h-6" />
+                </button>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-8">
+                {GALLERY_IMAGES.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentSlide(idx)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        idx === currentSlide ? 'bg-brand-accent w-8' : 'bg-white/30 hover:bg-white/50'
+                      }`}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
                 ))}
             </div>
         </div>
