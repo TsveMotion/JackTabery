@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Instagram, ArrowRight, ArrowUpRight, CheckCircle, Trophy, Calendar, Flag, Star, Award, Medal } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Menu, X, Instagram, ArrowRight, ArrowUpRight, CheckCircle, Trophy, Calendar, Flag, Star, Award, Medal, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Section } from './components/Section';
 import { Heading } from './components/Heading';
 import { LaurelIcon } from './components/LaurelIcon';
@@ -24,30 +24,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-scroll carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 5) % GALLERY_IMAGES.length);
-    }, 4000); // Change slide every 4 seconds
-    return () => clearInterval(interval);
+  // Auto-scroll carousel - every 3.5 seconds
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % GALLERY_IMAGES.length);
   }, []);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 5) % GALLERY_IMAGES.length);
-  };
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  }, []);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 5 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
-  };
-
-  const getVisibleImages = () => {
-    const images = [];
-    for (let i = 0; i < 5; i++) {
-      const index = (currentSlide + i) % GALLERY_IMAGES.length;
-      images.push(GALLERY_IMAGES[index]);
-    }
-    return images;
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [nextSlide]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, anchor: string) => {
     e.preventDefault();
@@ -93,9 +84,19 @@ const App: React.FC = () => {
   }, []);
 
   const getAchievementIcon = (id: string) => {
-    const iconClass = "w-16 h-16 md:w-20 md:h-20 text-brand-navy mb-4";
-    // All icons are Trophy for consistent praise-type appearance
-    return <Trophy className={iconClass} strokeWidth={1.5} />;
+    const iconClass = "w-14 h-14 md:w-16 md:h-16 mb-4";
+    switch (id) {
+      case '1':
+        return <Trophy className={`${iconClass} text-yellow-500`} strokeWidth={1.5} />;
+      case '2':
+        return <Medal className={`${iconClass} text-brand-accent`} strokeWidth={1.5} />;
+      case '3':
+        return <Award className={`${iconClass} text-emerald-500`} strokeWidth={1.5} />;
+      case '4':
+        return <Star className={`${iconClass} text-orange-400`} strokeWidth={1.5} />;
+      default:
+        return <Trophy className={`${iconClass} text-brand-accent`} strokeWidth={1.5} />;
+    }
   };
 
   return (
@@ -263,54 +264,6 @@ const App: React.FC = () => {
         </div>
       </Section>
 
-      {/* --- JOURNEY SECTION (COMMENTED OUT - KEEP FOR LATER) --- */}
-      {/* <Section id="journey" className="bg-brand-navy" dark>
-        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="relative">
-            <img 
-              src="/IMG_7569.JPG" 
-              alt="Karting days" 
-              loading="lazy"
-              className="w-full aspect-[4/5] object-cover opacity-60 rounded-lg"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/80 to-transparent md:hidden" />
-            <div className="absolute bottom-6 left-6 md:top-12 md:left-12 md:bottom-auto md:right-auto max-w-sm">
-              <h3 className="font-heading font-black italic text-3xl md:text-5xl uppercase leading-none text-white drop-shadow-lg">
-                Racing since <br/><span className="text-brand-accent">Day One</span>
-              </h3>
-            </div>
-          </div>
-
-          <div className="space-y-12">
-            <div>
-              <span className="text-brand-accent font-bold tracking-widest uppercase text-sm mb-2 block">The Beginning</span>
-              <Heading level={3} className="text-3xl mb-4" inverse>A Hunger for More</Heading>
-              <p className="text-brand-muted">
-                Starting in local cadets, Jack quickly proved his raw pace. The transition from karts to cars was a natural step, driven by an aspiration to become a professional factory driver.
-              </p>
-            </div>
-
-            <div className="space-y-8">
-              <div className="border-l-2 border-brand-accent pl-6">
-                <h4 className="font-heading font-bold italic text-xl text-white">2023 Season</h4>
-                <p className="text-sm text-brand-muted mt-1">Ginetta Junior Championship</p>
-                <p className="mt-2 text-brand-muted">Rookie podiums and consistent top-10 finishes marked a breakthrough year in car racing.</p>
-              </div>
-              <div className="border-l-2 border-white/20 pl-6">
-                <h4 className="font-heading font-bold italic text-xl text-white">2024 Season</h4>
-                <p className="text-sm text-brand-muted mt-1">British F4 - Testing & Development</p>
-                <p className="mt-2 text-brand-muted">Intensive testing program with {`{TEAM_NAME}`} focusing on telemetry analysis and physical conditioning.</p>
-              </div>
-              <div className="border-l-2 border-white/20 pl-6">
-                <h4 className="font-heading font-bold italic text-xl text-white">2025 Focus</h4>
-                <p className="text-sm text-brand-muted mt-1">Championship Contender</p>
-                <p className="mt-2 text-brand-muted">Objective: Compete at the front of the grid and secure sponsor-backed expansion into European rounds.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section> */}
-
       {/* --- ACCOMPLISHMENTS --- */}
       <Section className="bg-white relative overflow-hidden py-20">
         <div className="max-w-[1180px] mx-auto px-6">
@@ -318,19 +271,23 @@ const App: React.FC = () => {
             <Heading level={2} className="text-4xl md:text-5xl" accentWord="Accomplishments" dark>Career Accomplishments</Heading>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {ACCOMPLISHMENTS.map((item) => (
-              <div key={item.id} className="bg-white border border-brand-navy/10 p-8 rounded-xl flex flex-col items-center text-center shadow-lg hover:shadow-xl transition-shadow duration-300 group">
-                  <div className="transform group-hover:scale-110 transition-transform duration-300">
+              <div key={item.id} className="relative bg-gradient-to-br from-white to-slate-50 border border-brand-navy/10 p-6 md:p-8 rounded-2xl flex flex-col items-center text-center shadow-md hover:shadow-2xl transition-all duration-300 group hover:-translate-y-1 overflow-hidden">
+                  {/* Top accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-accent via-blue-400 to-brand-accent" />
+                  
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-brand-accent/10 transition-colors duration-300">
                     {getAchievementIcon(item.id)}
                   </div>
                   
-                  <h4 className="font-heading font-black italic text-2xl text-brand-navy uppercase tracking-tighter mb-2 leading-none">
+                  <h4 className="font-heading font-black italic text-xl md:text-2xl text-brand-navy uppercase tracking-tighter mb-2 leading-none">
                     {item.place}
                   </h4>
-                  <p className="font-bold text-sm text-brand-muted uppercase tracking-widest border-b-2 border-brand-accent/20 pb-3 mb-3 w-1/2 mx-auto">
+                  <p className="font-bold text-xs md:text-sm text-slate-500 uppercase tracking-widest mb-3">
                     {item.title}
                   </p>
+                  <div className="w-8 h-[2px] bg-brand-accent mb-3" />
                   <p className="text-xs font-bold text-brand-accent uppercase tracking-widest">
                     {item.subtitle}
                   </p>
@@ -351,17 +308,17 @@ const App: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
           {SCHEDULE_DATA.map((race) => (
-            <div key={race.id} className="group flex items-center bg-brand-surface border border-white/5 p-6 hover:border-brand-accent transition-colors rounded-lg">
-              <div className="bg-brand-navy text-white p-6 w-44 h-44 flex flex-col justify-center items-center text-center mr-8 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-sm shrink-0 border-4 border-white/20">
-                <span className="font-heading font-black italic text-5xl leading-none">{race.dateRange}</span>
-                <span className="text-lg font-bold uppercase tracking-wider mt-3">{race.month}</span>
+            <div key={race.id} className="group flex items-center bg-brand-surface border border-white/5 p-4 md:p-6 hover:border-brand-accent transition-colors rounded-lg">
+              <div className="bg-brand-navy text-white w-20 h-20 md:w-28 md:h-28 flex flex-col justify-center items-center text-center mr-4 md:mr-6 group-hover:bg-brand-accent group-hover:text-brand-navy transition-colors rounded-lg shrink-0 border-2 border-white/20">
+                <span className="font-heading font-black italic text-lg md:text-3xl leading-none">{race.dateRange}</span>
+                <span className="text-xs md:text-sm font-bold uppercase tracking-wider mt-1">{race.month}</span>
               </div>
               <div className="flex-grow min-w-0">
                 <div className="flex justify-between items-start gap-2">
-                  <span className="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
-                  <span className="text-2xl shrink-0" role="img" aria-label="flag">{race.flag}</span>
+                  <span className="text-[10px] md:text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
+                  <span className="text-lg md:text-2xl shrink-0" role="img" aria-label="flag">{race.flag}</span>
                 </div>
-                <h4 className="font-heading font-bold italic text-xl md:text-2xl uppercase text-white break-words">{race.circuit}</h4>
+                <h4 className="font-heading font-bold italic text-sm md:text-xl uppercase text-white break-words leading-tight">{race.circuit}</h4>
               </div>
             </div>
           ))}
@@ -399,8 +356,6 @@ const App: React.FC = () => {
         </div>
       </Section>
 
-
-
       {/* --- GALLERY --- */}
       <Section id="gallery" className="relative !py-0 bg-brand-navy" dark>
         {/* Background Text Overlay */}
@@ -410,63 +365,66 @@ const App: React.FC = () => {
            </span>
         </div>
 
-        <div className="relative py-24 max-w-[1600px] mx-auto px-6">
-            {/* Carousel with Navigation */}
+        <div className="relative py-16 md:py-24 max-w-[1400px] mx-auto px-4 md:px-6">
+            {/* Carousel - 1 big image at a time */}
             <div className="relative">
                 {/* Left Arrow */}
                 <button
                   onClick={prevSlide}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent hover:bg-white text-brand-navy p-4 rounded-full shadow-lg transition-all hover:scale-110"
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-brand-accent/90 hover:bg-white text-brand-navy p-3 md:p-4 rounded-full shadow-2xl transition-all hover:scale-110 backdrop-blur-sm"
                   aria-label="Previous"
                 >
-                  <ArrowRight className="w-6 h-6 rotate-180" />
+                  <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
                 </button>
 
-                {/* Images Container */}
-                <div className="overflow-hidden">
-                    <div className="flex gap-4 transition-transform duration-500 ease-in-out">
-                        {getVisibleImages().map((img, idx) => (
-                            <div 
-                              key={`${img.id}-${idx}`}
-                              className="group relative w-[calc(20%-12.8px)] flex-shrink-0 aspect-video overflow-hidden cursor-pointer bg-brand-surface rounded-lg border border-white/5"
-                              onClick={() => setLightboxImage(img.src)}
-                            >
-                                <img 
-                                    src={img.src} 
-                                    alt={img.alt} 
-                                    loading="lazy"
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-brand-navy/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <span className="border border-white text-white px-4 py-2 uppercase font-bold text-xs tracking-widest hover:bg-white hover:text-brand-navy transition-colors">View</span>
-                                </div>
-                            </div>
-                        ))}
+                {/* Single Image Display */}
+                <div className="overflow-hidden rounded-xl md:rounded-2xl border border-white/10 shadow-2xl">
+                    <div 
+                      className="relative w-full aspect-[16/9] md:aspect-[21/9] cursor-pointer group bg-brand-surface"
+                      onClick={() => setLightboxImage(GALLERY_IMAGES[currentSlide].src)}
+                    >
+                        <img 
+                            src={GALLERY_IMAGES[currentSlide].src} 
+                            alt={GALLERY_IMAGES[currentSlide].alt} 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
+                            <span className="border-2 border-white text-white px-6 py-3 uppercase font-bold text-sm tracking-widest hover:bg-white hover:text-brand-navy transition-colors rounded-sm">View Full Size</span>
+                        </div>
                     </div>
                 </div>
 
                 {/* Right Arrow */}
                 <button
                   onClick={nextSlide}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent hover:bg-white text-brand-navy p-4 rounded-full shadow-lg transition-all hover:scale-110"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-brand-accent/90 hover:bg-white text-brand-navy p-3 md:p-4 rounded-full shadow-2xl transition-all hover:scale-110 backdrop-blur-sm"
                   aria-label="Next"
                 >
-                  <ArrowRight className="w-6 h-6" />
+                  <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
                 </button>
             </div>
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-8">
-                {GALLERY_IMAGES.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentSlide(idx)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        idx === currentSlide ? 'bg-brand-accent w-8' : 'bg-white/30 hover:bg-white/50'
-                      }`}
-                      aria-label={`Go to slide ${idx + 1}`}
-                    />
-                ))}
+            {/* Counter & Dots */}
+            <div className="flex flex-col items-center mt-6 md:mt-8 gap-3">
+                <span className="text-sm font-bold text-brand-muted tracking-widest">
+                  {currentSlide + 1} / {GALLERY_IMAGES.length}
+                </span>
+                <div className="flex justify-center gap-1.5 flex-wrap max-w-md">
+                    {GALLERY_IMAGES.filter((_, idx) => idx % 3 === 0).map((_, dotIdx) => {
+                        const actualIdx = dotIdx * 3;
+                        const isActive = currentSlide >= actualIdx && currentSlide < actualIdx + 3;
+                        return (
+                          <button
+                            key={dotIdx}
+                            onClick={() => setCurrentSlide(actualIdx)}
+                            className={`w-2 h-2 rounded-full transition-all ${
+                              isActive ? 'bg-brand-accent w-6' : 'bg-white/30 hover:bg-white/50'
+                            }`}
+                            aria-label={`Go to slide group ${dotIdx + 1}`}
+                          />
+                        );
+                    })}
+                </div>
             </div>
         </div>
       </Section>
@@ -644,13 +602,12 @@ const App: React.FC = () => {
         <div className="max-w-[1180px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0 text-center md:text-left">
                 <p className="font-heading font-bold italic text-xl">JACK<span className="text-brand-accent">TABERY</span></p>
-                <p className="text-xs text-brand-muted mt-2">© {new Date().getFullYear()} Jack Tabery Racing. All rights reserved.</p>
+                <p className="text-xs text-brand-muted mt-2"> 2024 Jack Tabery Racing. All rights reserved.</p>
             </div>
             
             <div className="flex space-x-6 text-sm font-bold text-brand-muted uppercase tracking-wider">
                 <a href={SOCIAL_LINKS.instagram} className="hover:text-white transition-colors">Instagram</a>
-                <a href={SOCIAL_LINKS.tiktok} className="hover:text-white transition-colors">TikTok</a>
-                <a href={SOCIAL_LINKS.privacy} className="hover:text-white transition-colors">Privacy</a>
+                <a href="/privacy.html" className="hover:text-white transition-colors">Privacy</a>
             </div>
         </div>
       </footer>

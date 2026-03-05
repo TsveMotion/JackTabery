@@ -110,6 +110,5 @@ export const ARCHIVE_DATA: ArchiveSeason[] = [
 
 export const SOCIAL_LINKS = {
   instagram: "https://instagram.com/jacktaberyracing",
-  tiktok: "#",
   privacy: "/privacy"
 };
