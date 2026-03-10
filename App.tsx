@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Menu, X, Instagram, ArrowRight, ArrowUpRight, CheckCircle, Trophy, Calendar, Flag, Star, Award, Medal, ChevronLeft, ChevronRight, Facebook, ExternalLink } from 'lucide-react';
+import { Menu, X, Instagram, ArrowRight, ArrowUpRight, Trophy, Award, Medal, ChevronLeft, ChevronRight, Facebook, Mail } from 'lucide-react';
 import { Section } from './components/Section';
 import { Heading } from './components/Heading';
-import { LaurelIcon } from './components/LaurelIcon';
 import { NAV_ITEMS, SCHEDULE_DATA, PARTNERS, GALLERY_IMAGES, ACCOMPLISHMENTS, SOCIAL_LINKS, ARCHIVE_DATA } from './constants';
 import { getImageUrl } from './config';
 
@@ -13,9 +12,13 @@ const App: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [instaSlide, setInstaSlide] = useState(0);
 
-  // Form State
-  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', message: '', consent: false });
+  const instagramImages = [
+    '/IMG_6625.JPG',
+    '/Chester-79.jpg',
+    '/IMG_1904.JPG',
+    '/IMG_7574.JPG',
+    '/DO01000115.JPG'
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +44,13 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [nextSlide]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setInstaSlide((prev) => (prev + 1) % instagramImages.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [instagramImages.length]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, anchor: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
@@ -60,29 +70,6 @@ const App: React.FC = () => {
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate API call
-    setTimeout(() => setFormStatus('success'), 1000);
-  };
-
-  const instagramImages = [
-    '/IMG_6625.JPG',
-    '/IMG_7553.JPG',
-    '/Chester-79.jpg',
-    '/IMG_1904.JPG',
-    '/IMG_7574.JPG',
-    '/DO01000115.JPG'
-  ];
-
-  // Auto-rotate Instagram images every 4 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setInstaSlide((prev) => (prev + 1) % instagramImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [instagramImages.length]);
-
   // Preload first 5 carousel images for instant display
   useEffect(() => {
     const preloadImages = GALLERY_IMAGES.slice(0, 5);
@@ -93,12 +80,19 @@ const App: React.FC = () => {
   }, []);
 
   const getAchievementIcon = (id: string) => {
-    const iconClass = "w-14 h-14 md:w-16 md:h-16 mb-4 text-brand-navy";
+    const iconClass = "w-10 h-10 md:w-12 md:h-12 text-brand-navy";
     switch (id) {
       case '1':
         return <Trophy className={iconClass} strokeWidth={1.5} />;
       case '2':
-        return <Medal className={iconClass} strokeWidth={1.5} />;
+        return (
+          <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="12" width="5" height="8" rx="0.5" />
+            <rect x="9.5" y="6" width="5" height="14" rx="0.5" />
+            <rect x="16" y="10" width="5" height="10" rx="0.5" />
+            <path d="M12 3l-1.5 3h3L12 3z" />
+          </svg>
+        );
       case '3':
         return <Award className={iconClass} strokeWidth={1.5} />;
       case '4':
@@ -285,8 +279,7 @@ const App: React.FC = () => {
               const CardWrapper = item.link ? 'a' : 'div';
               const linkProps = item.link ? { href: item.link, target: '_blank' as const, rel: 'noopener noreferrer' } : {};
               return (
-                <CardWrapper key={item.id} {...linkProps} className={`relative bg-gradient-to-br from-white to-slate-50 border border-brand-navy/10 p-6 md:p-8 rounded-2xl flex flex-col items-center text-center shadow-md hover:shadow-2xl transition-all duration-300 group hover:-translate-y-1 overflow-hidden ${item.link ? 'cursor-pointer' : ''}`}>
-                    {/* Top accent bar */}
+                <CardWrapper key={item.id} {...linkProps} className={`relative bg-gradient-to-br from-white to-slate-50 border border-brand-navy/10 p-6 md:p-8 rounded-2xl flex flex-col items-center text-center group hover:border-brand-accent transition-all duration-300 ${item.link ? 'cursor-pointer' : ''}`}>
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-accent via-blue-400 to-brand-accent" />
                     
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-100 flex items-center justify-center mb-4 group-hover:bg-brand-accent/10 transition-colors duration-300">
@@ -303,7 +296,6 @@ const App: React.FC = () => {
                     <p className="text-xs font-bold text-brand-accent uppercase tracking-widest">
                       {item.subtitle}
                     </p>
-                    {item.link && <ExternalLink className="w-4 h-4 text-brand-navy/30 absolute top-4 right-4 group-hover:text-brand-accent transition-colors" />}
                 </CardWrapper>
               );
             })}
@@ -331,14 +323,8 @@ const App: React.FC = () => {
                   <span className="text-xs md:text-sm font-bold uppercase tracking-wider mt-1">{race.month}</span>
                 </div>
                 <div className="flex-grow min-w-0">
-                  <div className="flex justify-between items-start gap-2">
-                    <span className="text-[10px] md:text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {race.duration && <span className="text-[10px] md:text-xs font-bold text-brand-muted bg-white/5 px-2 py-0.5 rounded">{race.duration}</span>}
-                      {race.link && <ExternalLink className="w-3.5 h-3.5 text-brand-muted group-hover:text-brand-accent transition-colors" />}
-                    </div>
-                  </div>
-                  <h4 className="font-heading font-bold italic text-sm md:text-xl uppercase text-white break-words leading-tight">{race.circuit}{race.duration && <span className="text-brand-muted font-normal text-xs md:text-sm ml-2">({race.duration})</span>}</h4>
+                  <span className="text-[10px] md:text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
+                  <h4 className="font-heading font-bold italic text-sm md:text-xl uppercase text-white break-words leading-tight">{race.circuit}</h4>
                 </div>
               </RaceWrapper>
             );
@@ -357,19 +343,19 @@ const App: React.FC = () => {
           <table className="w-full min-w-[600px] border-collapse text-left">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Year</th>
-                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Series</th>
-                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider">Team</th>
-                <th className="py-6 px-6 text-lg font-black text-white uppercase tracking-wider text-right">Highlights</th>
+                <th className="py-6 px-6 text-lg font-black text-brand-accent italic uppercase tracking-wider">Year</th>
+                <th className="py-6 px-6 text-lg font-black text-brand-accent italic uppercase tracking-wider">Series</th>
+                <th className="py-6 px-6 text-lg font-black text-brand-accent italic uppercase tracking-wider">Team</th>
+                <th className="py-6 px-6 text-lg font-black text-brand-accent italic uppercase tracking-wider text-right">Highlights</th>
               </tr>
             </thead>
             <tbody>
               {ARCHIVE_DATA.map((season) => (
                 <tr key={season.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                  <td className="py-6 px-6 font-heading font-bold italic text-xl text-sky-300 group-hover:text-brand-accent transition-colors">{season.year}</td>
-                  <td className="py-6 px-6 font-bold italic text-sky-200">{season.series}</td>
-                  <td className="py-6 px-6 italic text-sky-300/70">{season.team}</td>
-                  <td className="py-6 px-6 text-sm italic text-sky-300/70 text-right">{season.highlights}</td>
+                  <td className="py-6 px-6 font-heading font-bold text-xl text-white group-hover:text-brand-accent transition-colors">{season.year}</td>
+                  <td className="py-6 px-6 font-bold text-white">{season.series}</td>
+                  <td className="py-6 px-6 text-white">{season.team}</td>
+                  <td className="py-6 px-6 text-sm text-white text-right">{season.highlights}</td>
                 </tr>
               ))}
             </tbody>
@@ -378,7 +364,7 @@ const App: React.FC = () => {
       </Section>
 
       {/* --- GALLERY --- */}
-      <Section id="gallery" className="relative !py-0 bg-brand-navy" dark>
+      <Section id="gallery" className="relative !py-0 bg-brand-navy [&>div]:max-w-[1650px] [&>div]:px-3 sm:[&>div]:px-5 md:[&>div]:px-8 lg:[&>div]:px-12" dark>
         {/* Background Text Overlay */}
         <div className="absolute top-0 left-0 w-full overflow-hidden pointer-events-none opacity-5">
            <span className="font-heading font-black italic text-[15rem] md:text-[20rem] uppercase whitespace-nowrap leading-none text-white">
@@ -386,35 +372,36 @@ const App: React.FC = () => {
            </span>
         </div>
 
-        <div className="relative py-16 md:py-24 max-w-[1400px] mx-auto px-4 md:px-6">
-            {/* Carousel - 6 images per slide */}
-            <div className="relative">
-                {/* Left Arrow */}
+        <div className="relative py-10 md:py-20 lg:py-24 w-full">
+            {/* Carousel - arrows on sides outside images */}
+            <div className="flex items-stretch gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+                {/* Left Arrow - beside the grid, not on top */}
                 <button
                   onClick={prevSlide}
-                  className="absolute -left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent/90 hover:bg-white text-brand-navy p-2 md:p-3 rounded-full shadow-2xl transition-all hover:scale-110 backdrop-blur-sm"
+                  className="flex-shrink-0 w-8 sm:w-12 md:w-16 lg:w-20 xl:w-24 flex items-center justify-center text-white/80 hover:text-brand-accent transition-colors"
                   aria-label="Previous"
                 >
-                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+                  <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
                 </button>
 
-                {/* 6-Image Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 px-8 md:px-12">
+                {/* 6-Image Single Row */}
+                <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 md:gap-3 lg:gap-4">
                     {Array.from({ length: 6 }).map((_, i) => {
-                        const imgIndex = (Math.floor(currentSlide / 6) * 6 + i) % GALLERY_IMAGES.length;
+                        const imgIndex = (currentSlide * 6 + i) % GALLERY_IMAGES.length;
                         return (
                           <div 
-                            key={i}
-                            className="aspect-square bg-brand-surface relative group overflow-hidden rounded-lg cursor-pointer border border-white/5 hover:border-brand-accent transition-all"
+                            key={`${currentSlide}-${i}`}
+                            className="aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6] bg-brand-surface relative group overflow-hidden cursor-pointer hover:brightness-110 transition-all"
                             onClick={() => setLightboxIndex(imgIndex)}
                           >
                               <img 
                                   src={GALLERY_IMAGES[imgIndex].src} 
                                   alt={GALLERY_IMAGES[imgIndex].alt} 
-                                  loading="lazy"
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                  loading={i < 2 ? 'eager' : 'lazy'}
+                                  decoding="async"
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                               />
-                              <div className="absolute inset-0 bg-brand-navy/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <div className="absolute inset-0 bg-brand-navy/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                   <span className="text-white text-xs font-bold uppercase tracking-widest">View</span>
                               </div>
                           </div>
@@ -422,120 +409,46 @@ const App: React.FC = () => {
                     })}
                 </div>
 
-                {/* Right Arrow */}
+                {/* Right Arrow - beside the grid, not on top */}
                 <button
                   onClick={nextSlide}
-                  className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 bg-brand-accent/90 hover:bg-white text-brand-navy p-2 md:p-3 rounded-full shadow-2xl transition-all hover:scale-110 backdrop-blur-sm"
+                  className="flex-shrink-0 w-8 sm:w-12 md:w-16 lg:w-20 xl:w-24 flex items-center justify-center text-white/80 hover:text-brand-accent transition-colors"
                   aria-label="Next"
                 >
-                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+                  <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
                 </button>
-            </div>
-
-            {/* Counter only - no dots */}
-            <div className="flex justify-center mt-6 md:mt-8">
-                <span className="text-sm font-bold text-brand-muted tracking-widest">
-                  {Math.floor(currentSlide / 6) + 1} / {Math.ceil(GALLERY_IMAGES.length / 6)}
-                </span>
             </div>
         </div>
       </Section>
 
       {/* --- CONTACT --- */}
       <Section id="contact">
-        <div className="max-w-4xl mx-auto bg-brand-surface shadow-2xl rounded-2xl overflow-hidden border border-white/5">
-          
-          {/* Form Side */}
-          <div className="p-8 md:p-12 lg:p-16">
-            <div className="text-center mb-10">
-                <span className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-2 block">Get in Touch</span>
-                <Heading level={2} className="text-3xl md:text-4xl mb-6">Contact Jack</Heading>
-                <p className="text-brand-muted max-w-xl mx-auto">
-                Interested in collaborating, sponsorship, or media enquiries? Fill out the form below.
-                </p>
-            </div>
-
-            {formStatus === 'success' ? (
-                <div className="bg-brand-navy border border-brand-accent/30 text-brand-accent p-8 rounded-lg flex flex-col items-center text-center">
-                    <CheckCircle className="w-12 h-12 mb-4" />
-                    <h4 className="font-bold text-xl mb-2">Message Sent!</h4>
-                    <p className="text-brand-muted">Thank you for reaching out. Jack's team will get back to you shortly.</p>
-                    <button onClick={() => setFormStatus('idle')} className="mt-6 text-sm underline font-bold text-white">Send another</button>
-                </div>
-            ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                    <label htmlFor="firstName" className="block text-xs font-bold uppercase text-brand-muted mb-2">First Name</label>
-                    <input 
-                        type="text" 
-                        id="firstName"
-                        required
-                        className="w-full bg-brand-navy border-b-2 border-white/10 focus:border-brand-accent outline-none px-4 py-3 text-white transition-colors"
-                        value={formData.firstName}
-                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                    />
-                    </div>
-                    <div>
-                    <label htmlFor="lastName" className="block text-xs font-bold uppercase text-brand-muted mb-2">Last Name</label>
-                    <input 
-                        type="text" 
-                        id="lastName"
-                        required
-                        className="w-full bg-brand-navy border-b-2 border-white/10 focus:border-brand-accent outline-none px-4 py-3 text-white transition-colors"
-                        value={formData.lastName}
-                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                    />
-                    </div>
-                </div>
-                <div>
-                    <label htmlFor="email" className="block text-xs font-bold uppercase text-brand-muted mb-2">Email Address</label>
-                    <input 
-                    type="email" 
-                    id="email"
-                    required
-                    className="w-full bg-brand-navy border-b-2 border-white/10 focus:border-brand-accent outline-none px-4 py-3 text-white transition-colors"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="message" className="block text-xs font-bold uppercase text-brand-muted mb-2">Message</label>
-                    <textarea 
-                    id="message"
-                    required
-                    rows={4}
-                    className="w-full bg-brand-navy border-b-2 border-white/10 focus:border-brand-accent outline-none px-4 py-3 text-white transition-colors resize-none"
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    ></textarea>
-                </div>
-                
-                <div className="flex items-start">
-                    <input 
-                    type="checkbox" 
-                    id="consent" 
-                    required 
-                    className="mt-1 mr-3 accent-brand-accent w-4 h-4 bg-brand-navy border-white/10"
-                    checked={formData.consent}
-                    onChange={(e) => setFormData({...formData, consent: e.target.checked})}
-                    />
-                    <label htmlFor="consent" className="text-xs text-brand-muted leading-relaxed">
-                    I agree to the processing of my personal data for the purpose of handling this enquiry.
-                    </label>
-                </div>
-
-                <div className="text-center">
-                    <button 
-                        type="submit" 
-                        className="w-full md:w-auto px-12 py-4 bg-brand-accent text-brand-navy font-bold uppercase tracking-wider hover:bg-white transition-colors rounded-sm"
-                    >
-                        Submit Enquiry
-                    </button>
-                </div>
-                </form>
-            )}
-          </div>
+        <div className="text-center mb-12">
+          <span className="text-brand-accent font-bold uppercase tracking-widest text-sm mb-2 block">Get in Touch</span>
+          <Heading level={2} className="text-3xl md:text-4xl mb-4">Contact Jack</Heading>
+          <p className="text-brand-muted max-w-xl mx-auto">Interested in collaborating, sponsorship, or media enquiries? Reach out below.</p>
+        </div>
+        <div className="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a 
+            href="mailto:jack@tabery.lu" 
+            className="relative bg-brand-surface border border-white/10 rounded-2xl p-8 flex flex-col items-center text-center group hover:border-brand-accent transition-all duration-300"
+          >
+            <ArrowUpRight className="w-5 h-5 text-white/40 absolute top-4 right-4 group-hover:text-brand-accent transition-colors" />
+            <Mail className="w-10 h-10 text-brand-accent mb-3" />
+            <h4 className="font-heading font-bold italic text-lg uppercase text-white mb-2">Email</h4>
+            <p className="text-brand-muted text-sm">jack@tabery.lu</p>
+          </a>
+          <a 
+            href="https://instagram.com/jacktaberyracing" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="relative bg-brand-surface border border-white/10 rounded-2xl p-8 flex flex-col items-center text-center group hover:border-brand-accent transition-all duration-300"
+          >
+            <ArrowUpRight className="w-5 h-5 text-white/40 absolute top-4 right-4 group-hover:text-brand-accent transition-colors" />
+            <Instagram className="w-10 h-10 text-brand-accent mb-3" />
+            <h4 className="font-heading font-bold italic text-lg uppercase text-white mb-2">Instagram</h4>
+            <p className="text-brand-muted text-sm">@jacktaberyracing</p>
+          </a>
         </div>
       </Section>
 
@@ -600,8 +513,8 @@ const App: React.FC = () => {
             </div>
         </div>
         {/* Rotating Image Display */}
-        <div className="max-w-[1180px] mx-auto px-6">
-            <div className="relative aspect-[21/9] rounded-xl overflow-hidden border border-white/10">
+        <div className="max-w-[1180px] mx-auto px-6 flex justify-center">
+            <div className="relative w-full aspect-[21/9] rounded-xl overflow-hidden border border-white/10">
                 {instagramImages.map((src, i) => (
                     <img 
                         key={i}
@@ -624,19 +537,78 @@ const App: React.FC = () => {
       </div>
 
       {/* --- FOOTER --- */}
-      <footer className="bg-brand-navy text-white py-12 border-t border-white/10">
-        <div className="max-w-[1180px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-6 md:mb-0 text-center md:text-left">
-                <p className="font-heading font-bold italic text-xl">JACK<span className="text-brand-accent">TABERY</span></p>
-                <p className="text-xs text-brand-muted mt-2"> 2025 Jack Tabery Racing. All rights reserved.</p>
+      <footer className="bg-brand-surface text-white border-t border-white/10">
+        {/* Top Footer */}
+        <div className="max-w-[1180px] mx-auto px-6 py-16 md:py-20">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+            {/* Brand Column */}
+            <div className="md:col-span-5">
+              <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="inline-block mb-6">
+                <span className="font-heading font-black italic text-3xl md:text-4xl tracking-tighter text-white">JACK<span className="text-brand-accent">TABERY</span></span>
+              </a>
+              <p className="text-brand-muted text-sm leading-relaxed max-w-sm mb-6">
+                Belgian racing driver competing in the Ligier European Series and French FunCup Championship. Driven by passion, built on discipline.
+              </p>
+              <div className="flex items-center gap-4">
+                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-brand-navy hover:border-brand-accent text-white transition-all">
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-brand-navy hover:border-brand-accent text-white transition-all">
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-accent hover:text-brand-navy hover:border-brand-accent text-white transition-all">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg>
+                </a>
+              </div>
             </div>
-            
-            <div className="flex space-x-6 text-sm font-bold text-brand-muted uppercase tracking-wider">
-                <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Instagram</a>
-                <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Facebook</a>
-                <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">TikTok</a>
-                <a href="/privacy.html" className="hover:text-white transition-colors">Privacy</a>
+
+            {/* Quick Links */}
+            <div className="md:col-span-3 md:col-start-7">
+              <h4 className="font-heading font-bold italic text-sm uppercase tracking-widest text-white mb-6">Quick Links</h4>
+              <ul className="space-y-3">
+                {NAV_ITEMS.map((item) => (
+                  <li key={item.label}>
+                    <a href={item.anchor} onClick={(e) => handleNavClick(e, item.anchor)} className="text-brand-muted text-sm hover:text-brand-accent transition-colors">{item.label}</a>
+                  </li>
+                ))}
+              </ul>
             </div>
+
+            {/* Contact Column */}
+            <div className="md:col-span-3">
+              <h4 className="font-heading font-bold italic text-sm uppercase tracking-widest text-white mb-6">Contact</h4>
+              <ul className="space-y-3">
+                <li>
+                  <a href="mailto:jack@tabery.lu" className="text-brand-muted text-sm hover:text-brand-accent transition-colors flex items-center gap-2">
+                    <Mail className="w-4 h-4 text-brand-accent shrink-0" /> jack@tabery.lu
+                  </a>
+                </li>
+                <li>
+                  <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noreferrer" className="text-brand-muted text-sm hover:text-brand-accent transition-colors flex items-center gap-2">
+                    <Instagram className="w-4 h-4 text-brand-accent shrink-0" /> @jacktaberyracing
+                  </a>
+                </li>
+                <li>
+                  <a href={SOCIAL_LINKS.tiktok} target="_blank" rel="noreferrer" className="text-brand-muted text-sm hover:text-brand-accent transition-colors flex items-center gap-2">
+                    <svg className="w-4 h-4 text-brand-accent shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V8.73a8.19 8.19 0 004.76 1.52V6.8a4.84 4.84 0 01-1-.11z"/></svg>
+                    @jack.tabery
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Footer Bar */}
+        <div className="border-t border-white/10">
+          <div className="max-w-[1180px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-brand-muted">&copy; {new Date().getFullYear()} Jack Tabery Racing. All rights reserved.</p>
+            <div className="flex items-center gap-6 text-xs text-brand-muted">
+              <a href="/privacy.html" className="hover:text-white transition-colors uppercase font-bold tracking-wider">Privacy Policy</a>
+              <span className="text-white/20">|</span>
+              <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="hover:text-white transition-colors uppercase font-bold tracking-wider">Contact</a>
+            </div>
+          </div>
         </div>
       </footer>
 
@@ -669,10 +641,6 @@ const App: React.FC = () => {
             >
                 <ChevronRight className="w-8 h-8" />
             </button>
-            {/* Image counter */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm font-bold tracking-widest">
-                {lightboxIndex + 1} / {GALLERY_IMAGES.length}
-            </div>
         </div>
       )}
 
