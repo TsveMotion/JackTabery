@@ -11,26 +11,26 @@ export const NAV_ITEMS: NavItem[] = [
 ];
 
 export const SCHEDULE_DATA: ScheduleItem[] = [
-  { id: '1', dateRange: '27-29', month: 'MAR', series: 'FRENCH FUNCUP', circuit: 'LE MANS BUGATTI', flag: '' },
+  { id: '1', dateRange: '27-29', month: 'MAR', series: 'FRENCH FUNCUP', circuit: 'LE MANS BUGATTI', flag: '', link: 'https://www.funcup.net/le-mans-2026/', duration: '8H' },
   { id: '2', dateRange: '11-12', month: 'APR', series: 'LIGIER EUROPEAN SERIES', circuit: 'BARCELONA', flag: '' },
   { id: '3', dateRange: '01-02', month: 'MAY', series: 'LIGIER EUROPEAN SERIES', circuit: 'LE CASTELLET', flag: '' },
-  { id: '4', dateRange: '22-24', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'MAGNY-COURS', flag: '' },
-  { id: '5', dateRange: '30-31', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'CHARADE', flag: '' },
-  { id: '6', dateRange: '07-08', month: 'JUN', series: 'LIGIER EUROPEAN SERIES', circuit: 'LE MANS 24H', flag: '' },
-  { id: '7', dateRange: '02-05', month: 'JUL', series: 'FRENCH FUNCUP', circuit: 'SPA-FRANCORCHAMPS 25H', flag: '' },
+  { id: '4', dateRange: '22-24', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'MAGNY-COURS', flag: '', link: 'https://www.funcup.net/magny-cours-2026/', duration: '8H' },
+  { id: '5', dateRange: '30-31', month: 'MAY', series: 'FRENCH FUNCUP', circuit: 'CHARADE', flag: '', link: 'https://www.funcup.net/charade-2026/', duration: '2x4H' },
+  { id: '6', dateRange: '07-08', month: 'JUN', series: 'LIGIER EUROPEAN SERIES', circuit: 'LE MANS (24H CIRCUIT)', flag: '' },
+  { id: '7', dateRange: '02-05', month: 'JUL', series: 'FRENCH FUNCUP', circuit: 'SPA-FRANCORCHAMPS', flag: '', link: 'https://www.funcup.net/spa-25h-2026/', duration: '25H' },
   { id: '8', dateRange: '21-23', month: 'AUG', series: 'LIGIER EUROPEAN SERIES', circuit: 'SPA-FRANCORCHAMPS', flag: '' },
-  { id: '9', dateRange: '04-06', month: 'SEP', series: 'FRENCH FUNCUP', circuit: 'LE CASTELLET', flag: '' },
+  { id: '9', dateRange: '04-06', month: 'SEP', series: 'FRENCH FUNCUP', circuit: 'LE CASTELLET', flag: '', link: 'https://www.funcup.net/le-castellet-2026/', duration: '8H' },
   { id: '10', dateRange: '11-12', month: 'SEP', series: 'LIGIER EUROPEAN SERIES', circuit: 'SILVERSTONE', flag: '' },
-  { id: '11', dateRange: '02-04', month: 'OCT', series: 'FRENCH FUNCUP', circuit: 'PORTIMÃO', flag: '' },
+  { id: '11', dateRange: '02-04', month: 'OCT', series: 'FRENCH FUNCUP', circuit: 'PORTIMÃO', flag: '', link: 'https://www.funcup.net/portimao-2026/', duration: '8H' },
   { id: '12', dateRange: '08-09', month: 'OCT', series: 'LIGIER EUROPEAN SERIES', circuit: 'PORTIMÃO', flag: '' },
-  { id: '13', dateRange: '16-18', month: 'OCT', series: 'FRENCH FUNCUP', circuit: 'NOGARO', flag: '' },
+  { id: '13', dateRange: '16-18', month: 'OCT', series: 'FRENCH FUNCUP', circuit: 'NOGARO', flag: '', link: 'https://www.funcup.net/nogaro-2026/', duration: '8H' },
 ];
 
 export const ACCOMPLISHMENTS: Accomplishment[] = [
-  { id: '1', place: '1st', title: 'Zolder Promotion Night', subtitle: '2024' },
-  { id: '2', place: '4x Podium in Class', title: 'European FunCup', subtitle: '2025' },
-  { id: '3', place: 'Vice-Champions in Class', title: 'European FunCup', subtitle: '2025' },
-  { id: '4', place: '1x Podium', title: 'Ligier JS Cup France', subtitle: '2025' },
+  { id: '1', place: '1st', title: 'Zolder Promotion Night', subtitle: '2024', link: 'https://www.instagram.com/p/DClfz7hijRP/?img_index=1' },
+  { id: '2', place: '4x Podium in Class', title: 'European FunCup', subtitle: '2025', link: 'https://www.instagram.com/p/DQZcosNAuNT/?img_index=1' },
+  { id: '3', place: 'Vice-Champions in Class', title: 'European FunCup', subtitle: '2025', link: 'https://www.autotrends.be/fr/actualit%C3%A9/endurance/Les-eleves-de-la-M3M-Endurance-Academy-demblee-vice-champions-en-Fun' },
+  { id: '4', place: '1x Podium', title: 'Ligier JS Cup France', subtitle: '2025', link: 'https://www.instagram.com/p/DKK6m8jC5ga/?img_index=1' },
 ];
 
 export const PARTNERS: Partner[] = [
@@ -110,5 +110,7 @@ export const ARCHIVE_DATA: ArchiveSeason[] = [
 
 export const SOCIAL_LINKS = {
   instagram: "https://instagram.com/jacktaberyracing",
+  facebook: "https://www.facebook.com/profile.php?id=100080906365968",
+  tiktok: "https://www.tiktok.com/@992.000",
   privacy: "/privacy"
 };

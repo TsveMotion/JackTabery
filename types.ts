@@ -5,6 +5,8 @@ export interface ScheduleItem {
   series: string;
   circuit: string;
   flag: string;
+  link?: string;
+  duration?: string;
 }
 
 export interface Partner {
@@ -26,6 +28,7 @@ export interface Accomplishment {
   place: string;
   title: string;
   subtitle: string;
+  link?: string;
 }
 
 export interface NavItem {
