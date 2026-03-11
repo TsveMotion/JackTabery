@@ -90,13 +90,18 @@ const App: React.FC = () => {
             <rect x="3" y="12" width="5" height="8" rx="0.5" />
             <rect x="9.5" y="6" width="5" height="14" rx="0.5" />
             <rect x="16" y="10" width="5" height="10" rx="0.5" />
-            <path d="M12 3l-1.5 3h3L12 3z" />
           </svg>
         );
       case '3':
         return <Award className={iconClass} strokeWidth={1.5} />;
       case '4':
-        return <Medal className={iconClass} strokeWidth={1.5} />;
+        return (
+          <svg className={iconClass} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="12" width="5" height="8" rx="0.5" />
+            <rect x="9.5" y="6" width="5" height="14" rx="0.5" />
+            <rect x="16" y="10" width="5" height="10" rx="0.5" />
+          </svg>
+        );
       default:
         return <Trophy className={iconClass} strokeWidth={1.5} />;
     }
@@ -166,7 +171,7 @@ const App: React.FC = () => {
         {/* Background Image Placeholder */}
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-70" 
-          style={{ backgroundImage: `url(/C6C2E732-0994-4CD1-9577-86ABB4E2C1AE.jpeg)` }} 
+          style={{ backgroundImage: `url(/IMG_6625.JPG)` }} 
         />
         
         {/* Gradient Overlay */}
