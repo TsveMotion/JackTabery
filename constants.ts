@@ -3,11 +3,12 @@ import { getImageUrl } from './config';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: "About Jack", anchor: "#about" },
-  { label: "Racing Calendar", anchor: "#calendar" },
+  { label: "Accomplishments", anchor: "#accomplishments" },
+  { label: "Calendar", anchor: "#calendar" },
   { label: "History", anchor: "#history" },
-  { label: "Partners", anchor: "#partners" },
   { label: "Medias", anchor: "#gallery" },
-  { label: "Contact", anchor: "#contact" }
+  { label: "Contact", anchor: "#contact" },
+  { label: "Partners", anchor: "#partners" }
 ];
 
 export const SCHEDULE_DATA: ScheduleItem[] = [
@@ -34,7 +35,7 @@ export const ACCOMPLISHMENTS: Accomplishment[] = [
 ];
 
 export const PARTNERS: Partner[] = [
-  { id: '1', name: 'Dedicated', logoUrl: '/partners/dedicated.png', url: 'https://dedicated.lu/' },
+  { id: '1', name: 'Dedicated', logoUrl: '/partners/dedicated new.png', url: 'https://dedicated.lu/' },
   { id: '2', name: 'The Little Bakeshop', logoUrl: '/partners/BakeShop.png', url: 'https://www.thelittlebakeshop.me/' },
   { id: '3', name: 'W Legal', logoUrl: '/partners/wlegal.png', url: '#' },
   { id: '4', name: 'WACC', logoUrl: '/partners/wacc2.png', url: 'https://www.wacc.lu/' },

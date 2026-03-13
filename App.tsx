@@ -235,7 +235,7 @@ const App: React.FC = () => {
             </div>
             <div className="mt-8">
               <img 
-                src="/IMG_6625.JPG" 
+                src="/use.png" 
                 alt="Jack racing on track" 
                 loading="lazy"
                 className="w-full h-64 object-cover rounded-lg transition-all duration-500 border border-white/10"
@@ -273,7 +273,7 @@ const App: React.FC = () => {
       </Section>
 
       {/* --- ACCOMPLISHMENTS --- */}
-      <Section className="bg-white relative overflow-hidden py-20">
+      <Section id="accomplishments" className="bg-white relative overflow-hidden py-20">
         <div className="max-w-[1180px] mx-auto px-6">
           <div className="text-center mb-16">
             <Heading level={2} className="text-4xl md:text-5xl" accentWord="Accomplishments" dark>Career Accomplishments</Heading>
@@ -330,6 +330,9 @@ const App: React.FC = () => {
                 <div className="flex-grow min-w-0">
                   <span className="text-[10px] md:text-xs font-bold text-brand-accent uppercase tracking-wider mb-1 block">{race.series}</span>
                   <h4 className="font-heading font-bold italic text-sm md:text-xl uppercase text-white break-words leading-tight">{race.circuit}</h4>
+                  {race.duration && (
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-brand-accent/15 text-brand-accent text-[10px] md:text-xs font-bold uppercase tracking-wider rounded">{race.duration}</span>
+                  )}
                 </div>
               </RaceWrapper>
             );
@@ -389,14 +392,14 @@ const App: React.FC = () => {
                   <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
                 </button>
 
-                {/* 6-Image Single Row */}
+                {/* 12-Image Two Row Grid */}
                 <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 md:gap-3 lg:gap-4">
-                    {Array.from({ length: 6 }).map((_, i) => {
-                        const imgIndex = (currentSlide * 6 + i) % GALLERY_IMAGES.length;
+                    {Array.from({ length: 12 }).map((_, i) => {
+                        const imgIndex = (currentSlide * 12 + i) % GALLERY_IMAGES.length;
                         return (
                           <div 
                             key={`${currentSlide}-${i}`}
-                            className="aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6] bg-brand-surface relative group overflow-hidden cursor-pointer hover:brightness-110 transition-all"
+                            className="aspect-[4/5] sm:aspect-[3/4] md:aspect-[4/5] lg:aspect-[5/6] bg-brand-surface relative group overflow-hidden cursor-pointer hover:brightness-110 transition-all rounded-lg"
                             onClick={() => setLightboxIndex(imgIndex)}
                           >
                               <img 
