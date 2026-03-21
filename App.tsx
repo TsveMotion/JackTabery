@@ -224,7 +224,7 @@ const App: React.FC = () => {
             <div className="space-y-6 text-brand-muted text-lg leading-relaxed">
               <p>
                 Jack Tabery is a dedicated racing driver focused on performance, consistency, and progression. 
-                His journey has evolved from rental karting to the national stage.
+                His journey has evolved from rental karting to motor racing all around Europe.
               </p>
               <p>
                 From rental karting to competitive circuit racing, his journey is built on discipline and measurable improvement.
