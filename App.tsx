@@ -608,10 +608,10 @@ const App: React.FC = () => {
         </div>
 
         {/* Built By Credit */}
-        <div className="border-t border-white/10">
-          <div className="max-w-[1180px] mx-auto px-6 py-5 flex justify-center">
-            <a href="https://tsvweb.com" target="_blank" rel="noopener noreferrer" className="text-base font-bold tracking-widest uppercase text-brand-muted hover:text-brand-accent transition-colors">
-              Built by TsvWeb.com
+        <div className="border-t border-white/10 bg-white/5">
+          <div className="max-w-[1180px] mx-auto px-6 py-6 flex justify-center">
+            <a href="https://tsvweb.com" target="_blank" rel="noopener noreferrer" className="text-xl font-extrabold tracking-widest uppercase text-white hover:text-brand-accent transition-colors underline underline-offset-4 decoration-brand-accent/60 hover:decoration-brand-accent">
+              Built by tsvweb.com
             </a>
           </div>
         </div>
