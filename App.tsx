@@ -607,6 +607,15 @@ const App: React.FC = () => {
           </div>
         </div>
 
+        {/* Built By Credit */}
+        <div className="border-t border-white/10">
+          <div className="max-w-[1180px] mx-auto px-6 py-5 flex justify-center">
+            <a href="https://tsvweb.com" target="_blank" rel="noopener noreferrer" className="text-base font-bold tracking-widest uppercase text-brand-muted hover:text-brand-accent transition-colors">
+              Built by TsvWeb.com
+            </a>
+          </div>
+        </div>
+
         {/* Bottom Footer Bar */}
         <div className="border-t border-white/10">
           <div className="max-w-[1180px] mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
